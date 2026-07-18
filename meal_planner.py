@@ -97,6 +97,8 @@ MEAL_TEMPLATES: dict[str, dict[str, Meal]] = {
     },
 }
 
+BUDGET_TOLERANCE = 0.01
+
 
 def _choose_template(day_summary: str) -> str:
     text = day_summary.lower()
@@ -133,7 +135,7 @@ def generate_plan(day_summary: str, budget: float, servings: int = 1) -> dict:
     grocery_list = [f"{ingredient} x{count * servings}" for ingredient, count in sorted(grocery_counter.items())]
 
     feasible = total_cost <= budget
-    if feasible and abs(total_cost - budget) < 0.01:
+    if feasible and abs(total_cost - budget) < BUDGET_TOLERANCE:
         budget_message = "Exactly on budget."
     elif feasible:
         budget_message = f"Within budget by ${budget - total_cost:.2f}."
