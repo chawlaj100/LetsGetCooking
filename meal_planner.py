@@ -97,6 +97,13 @@ MEAL_TEMPLATES: dict[str, dict[str, Meal]] = {
     },
 }
 
+TODO_HINTS_BY_TEMPLATE = {
+    "quick": "Use shortcuts: pre-cut vegetables and one-pan cooking.",
+    "high_protein": "Prioritize protein prep first to support your training day.",
+    "vegetarian": "Rinse and batch-cook legumes/grains to save time.",
+    "balanced": "Prep mixed vegetables in advance for lunch and dinner.",
+}
+
 def _choose_template(day_summary: str) -> str:
     text = day_summary.lower()
     if any(token in text for token in ("busy", "meeting", "late", "commute")):
@@ -156,7 +163,7 @@ def generate_plan(day_summary: str, budget: float, servings: int = 1) -> dict:
         "todo_list": [
             "Review meal plan and confirm what is already in pantry.",
             "Buy items from grocery list.",
-            "Prep ingredients for lunch and dinner in one batch.",
+            TODO_HINTS_BY_TEMPLATE[template_name],
             "Cook meals in order: breakfast, lunch, dinner.",
         ],
         "grocery_list": grocery_list,

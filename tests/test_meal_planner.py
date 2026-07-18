@@ -2,6 +2,8 @@ import unittest
 
 from meal_planner import generate_plan
 
+OVER_BUDGET_MARGIN = 0.01
+
 
 class GeneratePlanTests(unittest.TestCase):
     def test_generates_required_sections(self):
@@ -16,8 +18,8 @@ class GeneratePlanTests(unittest.TestCase):
 
     def test_budget_feasibility_logic(self):
         baseline = generate_plan(day_summary="normal day", budget=100, servings=1)
-        small_margin = min(1.0, max(0.01, baseline["budget"]["estimated_total"] / 2))
-        budget_limit = baseline["budget"]["estimated_total"] - small_margin
+        self.assertGreater(baseline["budget"]["estimated_total"], OVER_BUDGET_MARGIN)
+        budget_limit = baseline["budget"]["estimated_total"] - OVER_BUDGET_MARGIN
         plan = generate_plan(day_summary="normal day", budget=budget_limit, servings=1)
 
         self.assertGreater(plan["budget"]["estimated_total"], plan["budget"]["limit"])
