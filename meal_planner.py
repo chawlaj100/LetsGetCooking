@@ -119,18 +119,23 @@ def generate_plan(day_summary: str, budget: float, servings: int = 1) -> dict:
     meals = MEAL_TEMPLATES[template_name]
 
     grocery_counter: Counter[str] = Counter()
-    substitutions: dict[str, list[str]] = {}
+    substitutions: dict[str, list[dict[str, str]]] = {}
     total_cost = 0.0
 
     for meal_type, meal in meals.items():
         grocery_counter.update(meal.ingredients)
         total_cost += meal.estimated_cost * servings
-        substitutions[meal_type] = [f"{ingredient} -> {replacement}" for ingredient, replacement in meal.substitutions.items()]
+        substitutions[meal_type] = [
+            {"ingredient": ingredient, "replacement": replacement}
+            for ingredient, replacement in meal.substitutions.items()
+        ]
 
     grocery_list = [f"{ingredient} x{count * servings}" for ingredient, count in sorted(grocery_counter.items())]
 
     feasible = total_cost <= budget
-    if feasible:
+    if feasible and total_cost == budget:
+        budget_message = "Exactly on budget."
+    elif feasible:
         budget_message = f"Within budget by ${budget - total_cost:.2f}."
     else:
         budget_message = (
