@@ -15,7 +15,7 @@ class GeneratePlanTests(unittest.TestCase):
         self.assertIn("feasible", plan["budget"])
 
     def test_budget_feasibility_logic(self):
-        plan = generate_plan(day_summary="normal day", budget=2, servings=1)
+        plan = generate_plan(day_summary="normal day", budget=0, servings=1)
 
         self.assertFalse(plan["budget"]["feasible"])
         self.assertIn("Over budget", plan["budget"]["message"])
@@ -30,6 +30,14 @@ class GeneratePlanTests(unittest.TestCase):
 
         self.assertTrue(plan["budget"]["feasible"])
         self.assertIn("Within budget", plan["budget"]["message"])
+
+    def test_invalid_servings_raises(self):
+        with self.assertRaises(ValueError):
+            generate_plan(day_summary="normal day", budget=20, servings=0)
+
+    def test_invalid_budget_raises(self):
+        with self.assertRaises(ValueError):
+            generate_plan(day_summary="normal day", budget=-1, servings=1)
 
 
 if __name__ == "__main__":
