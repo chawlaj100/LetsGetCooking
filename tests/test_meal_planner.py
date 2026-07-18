@@ -20,10 +20,16 @@ class GeneratePlanTests(unittest.TestCase):
         self.assertFalse(plan["budget"]["feasible"])
         self.assertIn("Over budget", plan["budget"]["message"])
 
-    def test_template_selection_for_workout_day(self):
+    def test_selects_high_protein_template_for_workout_keywords(self):
         plan = generate_plan(day_summary="morning workout and run", budget=50, servings=1)
 
         self.assertEqual(plan["plan_type"], "high_protein")
+
+    def test_budget_message_when_feasible(self):
+        plan = generate_plan(day_summary="busy office day", budget=30, servings=1)
+
+        self.assertTrue(plan["budget"]["feasible"])
+        self.assertIn("Within budget", plan["budget"]["message"])
 
 
 if __name__ == "__main__":

@@ -127,10 +127,7 @@ def generate_plan(day_summary: str, budget: float, servings: int = 1) -> dict:
         total_cost += meal.estimated_cost * servings
         substitutions[meal_type] = [f"{ingredient} -> {replacement}" for ingredient, replacement in meal.substitutions.items()]
 
-    grocery_list = [
-        f"{ingredient} x{count * servings}" if count > 1 else f"{ingredient} x{servings}"
-        for ingredient, count in sorted(grocery_counter.items())
-    ]
+    grocery_list = [f"{ingredient} x{count * servings}" for ingredient, count in sorted(grocery_counter.items())]
 
     feasible = total_cost <= budget
     if feasible:
