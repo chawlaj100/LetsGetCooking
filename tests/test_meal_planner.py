@@ -15,7 +15,9 @@ class GeneratePlanTests(unittest.TestCase):
         self.assertIn("feasible", plan["budget"])
 
     def test_budget_feasibility_logic(self):
-        plan = generate_plan(day_summary="normal day", budget=0, servings=1)
+        baseline = generate_plan(day_summary="normal day", budget=100, servings=1)
+        budget_limit = baseline["budget"]["estimated_total"] - 0.01
+        plan = generate_plan(day_summary="normal day", budget=budget_limit, servings=1)
 
         self.assertGreater(plan["budget"]["estimated_total"], plan["budget"]["limit"])
         self.assertFalse(plan["budget"]["feasible"])
