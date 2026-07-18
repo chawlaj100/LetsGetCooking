@@ -1,0 +1,6 @@
+{
+  "name": "AI Meal Planner",
+  "description": "AI-powered meal planner that generates personalized daily meal plans, categorized grocery lists, budget estimates, and smart substitutions based on your schedule, constraints, and preferences.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

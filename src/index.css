@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Lora", Georgia, serif;
+  --font-display: "Outfit", sans-serif;
+
+  --color-sage-50: #F2F5F2;
+  --color-sage-100: #E4EBE4;
+  --color-sage-600: #5A6B5D;
+  --color-sage-700: #48564a;
+  --color-sage-900: #3E4A3F;
+
+  --color-terracotta-50: #FDF3EE;
+  --color-terracotta-100: #F5E6DD;
+  --color-terracotta-500: #D48C70;
+  --color-terracotta-800: #8B6E5E;
+
+  --color-linen-50: #FDFCF8;
+  --color-linen-100: #F2EFE9;
+  --color-linen-200: #E8E6DF;
+}
+
+/* Custom fade-in and slide-up micro-animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
