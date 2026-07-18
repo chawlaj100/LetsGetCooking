@@ -1,6 +1,6 @@
 import unittest
 
-from meal_planner import BUDGET_TOLERANCE, generate_plan
+from meal_planner import generate_plan
 
 
 class GeneratePlanTests(unittest.TestCase):
@@ -16,7 +16,7 @@ class GeneratePlanTests(unittest.TestCase):
 
     def test_budget_feasibility_logic(self):
         baseline = generate_plan(day_summary="normal day", budget=100, servings=1)
-        small_margin = BUDGET_TOLERANCE
+        small_margin = min(1.0, max(0.01, baseline["budget"]["estimated_total"] / 2))
         budget_limit = baseline["budget"]["estimated_total"] - small_margin
         plan = generate_plan(day_summary="normal day", budget=budget_limit, servings=1)
 

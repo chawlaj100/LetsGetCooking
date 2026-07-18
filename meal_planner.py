@@ -97,9 +97,6 @@ MEAL_TEMPLATES: dict[str, dict[str, Meal]] = {
     },
 }
 
-BUDGET_TOLERANCE = 0.01
-
-
 def _choose_template(day_summary: str) -> str:
     text = day_summary.lower()
     if any(token in text for token in ("busy", "meeting", "late", "commute")):
@@ -132,13 +129,13 @@ def generate_plan(day_summary: str, budget: float, servings: int = 1) -> dict:
             for ingredient, replacement in meal.substitutions.items()
         ]
 
-    grocery_list = [
-        f"{ingredient} x{count * servings}" if count * servings > 1 else ingredient
-        for ingredient, count in sorted(grocery_counter.items())
-    ]
+    grocery_list = []
+    for ingredient, count in sorted(grocery_counter.items()):
+        quantity = count * servings
+        grocery_list.append(f"{ingredient} x{quantity}" if quantity > 1 else ingredient)
 
     feasible = total_cost <= budget
-    if feasible and abs(total_cost - budget) < BUDGET_TOLERANCE:
+    if feasible and round(total_cost, 2) == round(budget, 2):
         budget_message = "Exactly on budget."
     elif feasible:
         budget_message = f"Within budget by ${budget - total_cost:.2f}."
